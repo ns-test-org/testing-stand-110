@@ -217,7 +217,7 @@ export default function PacManGame() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white text-black p-4">
-      <h1 className="text-4xl font-bold mb-4">v2</h1>
+      <h1 className="text-4xl font-bold mb-4">v3</h1>
       <div className="mb-4 text-2xl">Score: {score}</div>
       
       <canvas
@@ -250,6 +250,7 @@ export default function PacManGame() {
     </div>
   );
 }
+
 
 
 
