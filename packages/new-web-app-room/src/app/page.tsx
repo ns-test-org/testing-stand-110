@@ -234,7 +234,7 @@ export default function PacManGame() {
           {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
         </button>
       </div>
-      <h1 className="text-4xl font-bold mb-4">Pac-Man</h1>
+      <h1 className="text-4xl font-bold mb-4">Pac-Man v4</h1>
       <div className="mb-4 text-2xl">Score: {score}</div>
       
       <canvas
@@ -275,6 +275,7 @@ export default function PacManGame() {
     </div>
   );
 }
+
 
 
 
