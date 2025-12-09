@@ -134,11 +134,11 @@ export default function PacManGame() {
       });
 
       // Draw
-      ctx.fillStyle = '#000';
+      ctx.fillStyle = '#f0f0f0';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Draw dots
-      ctx.fillStyle = '#fff';
+      ctx.fillStyle = '#333';
       for (let y = 0; y < GRID_SIZE; y++) {
         for (let x = 0; x < GRID_SIZE; x++) {
           if (dotsRef.current[y]?.[x]) {
@@ -216,7 +216,7 @@ export default function PacManGame() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white p-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white text-black p-4">
       <h1 className="text-4xl font-bold mb-4">PAC-MAN</h1>
       <div className="mb-4 text-2xl">Score: {score}</div>
       
@@ -243,11 +243,14 @@ export default function PacManGame() {
         </div>
       )}
       
-      <div className="mt-4 text-center text-sm text-gray-400">
+      <div className="mt-4 text-center text-sm text-gray-600">
         <div>Use arrow keys to move</div>
         <div>Avoid the ghosts and eat all the dots!</div>
       </div>
     </div>
   );
 }
+
+
+
 
