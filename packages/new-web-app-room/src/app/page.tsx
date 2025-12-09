@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { Moon, Sun } from 'lucide-react';
 
 type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
 type Position = { x: number; y: number };
@@ -13,6 +14,7 @@ export default function PacManGame() {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   
   const pacmanRef = useRef<Position>({ x: 10, y: 10 });
   const directionRef = useRef<Direction>('RIGHT');
@@ -134,11 +136,11 @@ export default function PacManGame() {
       });
 
       // Draw
-      ctx.fillStyle = '#f0f0f0';
+      ctx.fillStyle = isDarkMode ? '#1a1a1a' : '#f0f0f0';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Draw dots
-      ctx.fillStyle = '#333';
+      ctx.fillStyle = isDarkMode ? '#888' : '#333';
       for (let y = 0; y < GRID_SIZE; y++) {
         for (let x = 0; x < GRID_SIZE; x++) {
           if (dotsRef.current[y]?.[x]) {
@@ -188,7 +190,7 @@ export default function PacManGame() {
     }, INITIAL_SPEED);
 
     return () => clearInterval(gameLoop);
-  }, [gameStarted, gameOver]);
+  }, [gameStarted, gameOver, isDarkMode]);
 
   const resetGame = () => {
     pacmanRef.current = { x: 10, y: 10 };
@@ -216,15 +218,32 @@ export default function PacManGame() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white text-black p-4">
-      <h1 className="text-4xl font-bold mb-4">v4</h1>
+    <div className={`flex flex-col items-center justify-center min-h-screen p-4 transition-colors duration-300 ${
+      isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'
+    }`}>
+      <div className="absolute top-4 right-4">
+        <button
+          onClick={() => setIsDarkMode(!isDarkMode)}
+          className={`p-3 rounded-full transition-all duration-300 ${
+            isDarkMode 
+              ? 'bg-gray-800 hover:bg-gray-700 text-yellow-400' 
+              : 'bg-gray-200 hover:bg-gray-300 text-gray-800'
+          }`}
+          aria-label="Toggle theme"
+        >
+          {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
+        </button>
+      </div>
+      <h1 className="text-4xl font-bold mb-4">Pac-Man</h1>
       <div className="mb-4 text-2xl">Score: {score}</div>
       
       <canvas
         ref={canvasRef}
         width={600}
         height={600}
-        className="border-4 border-blue-500 mb-4"
+        className={`border-4 mb-4 transition-colors duration-300 ${
+          isDarkMode ? 'border-blue-400' : 'border-blue-500'
+        }`}
       />
       
       {!gameStarted && !gameOver && (
@@ -236,20 +255,27 @@ export default function PacManGame() {
           <div className="text-3xl text-red-500 mb-4">GAME OVER!</div>
           <button
             onClick={resetGame}
-            className="px-6 py-3 bg-yellow-500 text-black font-bold rounded hover:bg-yellow-400 transition"
+            className={`px-6 py-3 font-bold rounded transition-all duration-300 ${
+              isDarkMode
+                ? 'bg-yellow-400 hover:bg-yellow-300 text-black'
+                : 'bg-yellow-500 hover:bg-yellow-400 text-black'
+            }`}
           >
             Play Again
           </button>
         </div>
       )}
       
-      <div className="mt-4 text-center text-sm text-gray-600">
+      <div className={`mt-4 text-center text-sm transition-colors duration-300 ${
+        isDarkMode ? 'text-gray-400' : 'text-gray-600'
+      }`}>
         <div>Use arrow keys to move</div>
         <div>Avoid the ghosts and eat all the dots!</div>
       </div>
     </div>
   );
 }
+
 
 
 
